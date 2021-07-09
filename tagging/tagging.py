@@ -1,3 +1,5 @@
+from typing import Optional
+
 from discord.ext import commands
 
 from core import checks
@@ -10,9 +12,20 @@ class Tagging(commands.Cog):
 
     @checks.has_permissions(PermissionLevel.SUPPORTER)
     @commands.command()
-    async def tag(self, ctx, tag: str):
+    async def tag(self, ctx, tag: Optional[str]):
+        """
+        Append a tag at the beginning of the channel name.
+
+        Using the command without any argument will reset it.
+        """
         clean_name = ctx.channel.name.split("｜", maxsplit=1)[-1]
-        await ctx.channel.edit(name=f"{tag}｜{clean_name}")
+
+        if tag:
+            name = f"{tag}｜{clean_name}"
+        else:
+            name = clean_name
+
+        await ctx.channel.edit(name=name)
         await ctx.message.add_reaction("\u2705")
 
 
