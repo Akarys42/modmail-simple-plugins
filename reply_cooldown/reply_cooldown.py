@@ -17,8 +17,6 @@ def setup(bot):
     _reply = Thread.reply
 
     async def reply(self, message: discord.Message, anonymous: bool = False, plain: bool = False):
-        _pass_through = False
-
         # Bypass the cooldown if the message has attachements
         if not message.attachments:
             for entry in MESSAGES_BUFFER:
